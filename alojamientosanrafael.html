@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquileres San Rafael | Lomas del Sol</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #050505;
+            --accent: #2d6a4f;
+            --whatsapp: #25d366;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --gold: #ffc107;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: #f4f7f4;
+            color: var(--dark);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* --- ANIMACIONES REVEAL --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* NAVEGACIÓN */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        nav a { text-decoration: none; color: var(--dark); margin: 0 20px; font-weight: bold; font-size: 0.9rem; transition: 0.3s; }
+        nav a:hover { color: var(--accent); }
+
+        /* HERO SLIDER */
+        .hero { position: relative; height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; overflow: hidden; }
+        .hero-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        .slide.active { opacity: 1; }
+        .hero-overlay-dark { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; }
+        .logo-overlay { position: absolute; top: 20px; left: 20px; z-index: 10; }
+        .logo-overlay img { max-width: 150px; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); transition: 0.4s; }
+        .hero-content { position: relative; z-index: 3; }
+        .hero h1 { font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); margin: 0; }
+
+        /* WHATSAPP FLOTANTE */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; background-color: var(--whatsapp);
+            color: white; padding: 15px 25px; border-radius: 50px; display: flex;
+            align-items: center; gap: 10px; text-decoration: none; z-index: 3000;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); font-weight: bold; animation: pulse-wa 2s infinite;
+        }
+        @keyframes pulse-wa { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        .container { max-width: 1100px; margin: auto; padding: 60px 20px; }
+        .info-section { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; margin-bottom: 80px; }
+
+        /* CABAÑAS */
+        .grid-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: white; border-radius: 20px; overflow: hidden; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card:hover { transform: translateY(-15px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+        .card-img { height: 250px; background-size: cover; background-position: center; transition: 0.5s; }
+        .card:hover .card-img { transform: scale(1.1); }
+        .card-body { padding: 25px; text-align: center; }
+
+        /* SECCIÓN RESEÑAS */
+        .reviews-section { background-color: #fff; padding: 80px 0; margin-top: 50px; border-radius: 50px; box-shadow: inset 0 0 50px rgba(0,0,0,0.02); }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
+        .review-card { background: #fdfdfd; padding: 30px; border-radius: 20px; border: 1px solid #eee; transition: 0.3s; }
+        .stars { color: var(--gold); margin-bottom: 15px; font-size: 0.9rem; }
+        .btn-reviews { display: inline-block; margin-top: 40px; color: #4285F4; text-decoration: none; font-weight: bold; border: 2px solid #4285F4; padding: 12px 25px; border-radius: 50px; transition: 0.3s; }
+
+        /* PRESUPUESTO */
+        .booking-section { background: var(--primary); color: white; padding: 80px 20px; border-radius: 50px 50px 0 0; text-align: center; margin-top: 80px; }
+        .booking-card { background: white; color: var(--dark); max-width: 750px; margin: 40px auto; padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .input-group { text-align: left; }
+        .input-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 8px; color: #666; }
+        .input-group select, .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 12px; font-size: 1rem; box-sizing: border-box; }
+        .btn-calc { background: var(--accent); color: white; border: none; padding: 18px; border-radius: 50px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-wa { display: block; background: var(--whatsapp); color: white; text-decoration: none; padding: 20px; border-radius: 50px; font-weight: bold; text-align: center; }
+
+        /* Modal y Mapa */
+        .map-container { height: 450px; border-radius: 25px; overflow: hidden; margin: 40px 0; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); }
+        .modal-content { background: white; margin: 3% auto; width: 90%; max-width: 750px; border-radius: 25px; overflow: hidden; position: relative; animation: modalIn 0.4s; }
+        .modal-img { width: 100%; height: 350px; background-size: cover; background-position: center; }
+        .close { position: absolute; right: 20px; top: 15px; font-size: 35px; color: white; cursor: pointer; z-index: 10; }
+
+        footer { background: #111; color: #777; text-align: center; padding: 40px; }
+
+        @media (max-width: 768px) { .info-section, .form-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.5rem; } .whatsapp-float span { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#cabanas">Cabañas</a>
+        <a href="#testimonios">Opiniones</a>
+        <a href="#ubicacion">Ubicación</a>
+        <a href="#reservas">Presupuesto</a>
+    </nav>
+
+    <section class="hero" id="inicio">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: url('pileta 2.png');"></div>
+            <div class="slide" style="background-image: url('complejo.PNG');"></div>
+            <div class="slide" style="background-image: url('frenteaguaribay.jpg');"></div>
+        </div>
+        <div class="hero-overlay-dark"></div>
+        <div class="logo-overlay">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <div class="hero-content">
+            <h1>Alquileres San Rafael</h1>
+            <p>Tu descanso soñado en Lomas del Sol</p>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5492604380209" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span>¡Consultanos ahora!</span>
+    </a>
+
+    <div class="container">
+        <section id="nosotros" class="info-section reveal">
+            <div class="info-text">
+                <h2>Bienvenidos</h2>
+                <p>Te invitamos a disfrutar de una estadía tranquila, cómoda y rodeada de naturaleza. Nuestro complejo combina espacios amplios, un entorno verde y un clima familiar.</p>
+                <p>Ubicados sobre Ruta 173 Calle Cubillos al 8300, en el corazón de la zona turística.</p>
+            </div>
+            <img src="complejo.PNG" style="width: 100%; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" alt="Complejo">
+        </section>
+
+        <section id="cabanas" class="reveal">
+            <h2 style="text-align:center; font-size: 2.8rem; margin-bottom: 50px;">Nuestras Cabañas</h2>
+            <div class="grid-gallery">
+                <div class="card" onclick="abrir('Cabaña Tres', 'Cabaña acogedora ideal para el descanso.', '2', 'Wi-Fi, Parrilla, AC', 'C3.png')">
+                    <div class="card-img" style="background-image: url('C3.png');"></div>
+                    <div class="card-body"><h3>Cabaña Tres</h3><p>Ver detalles e imágenes</p></div>
+                </div>
+                <div class="card" onclick="abrir('Cabaña Crisma', 'Monoambiente minimalista y confortable.', '2-4', 'Cocina equipada, heladera', 'crisma.jpg')">
+                    <div class="card-img" style="background-image: url('crisma.jpg');"></div>
+                    <div class="card-body"><h3>Cabaña Crisma</h3><p>Ver detalles e imágenes</p></div>
+                </div>
+                <div class="card" onclick="abrir('Cabaña Alpina', 'Cabaña clásica y cálida.', '2', 'Wi-Fi, Parrilla, AC', 'alpina.jpg')">
+                    <div class="card-img" style="background-image: url('alpina.jpg');"></div>
+                    <div class="card-body"><h3>Cabaña Alpina</h3><p>Ver detalles e imágenes</p></div>
+                </div>
+                <div class="card" onclick="abrir('Cabaña Media Naranja', 'Vista directa al Río Atuel.', '4', 'Jacuzzi, Deck, Cochera', 'medianaranja.jpg')">
+                    <div class="card-img" style="background-image: url('medianaranja.jpg');"></div>
+                    <div class="card-body"><h3>Media Naranja</h3><p>Ver detalles e imágenes</p></div>
+                </div>
+                <div class="card" onclick="abrir('Cabaña Aguaribay 1 y 2', 'Cabaña ideal para descansar.', '2', 'Wi-Fi, Parrilla, AC', 'frenteaguaribay.jpg')">
+                    <div class="card-img" style="background-image: url('frenteaguaribay.jpg');"></div>
+                    <div class="card-body"><h3>Aguaribay 1 y 2</h3><p>Ver detalles e imágenes</p></div>
+                </div>
+                <div class="card" onclick="abrir('Cabaña LaRoseta', 'Vista directa al Río Atuel.', '4', 'Jacuzzi, Deck, Cochera', 'laroseta.png')">
+                    <div class="card-img" style="background-image: url('laroseta.png');"></div>
+                    <div class="card-body"><h3>Cabaña LaRoseta</h3><p>Ver detalles e imágenes</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonios" class="reviews-section reveal" style="text-align: center;">
+            <h2 style="font-size: 2.5rem;">Lo que dicen nuestros huéspedes</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="review-text">"La atención y la suite muy linda... espectacular."</p>
+                    <div class="review-author"><i class="fab fa-google"></i> Bianchi Maria</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                    <p class="review-text">"Muy buena estadía no tuvimos ningún problema y la cabaña 10 puntos."</p>
+                    <div class="review-author"><i class="fab fa-google"></i> Reseña de Google</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="review-text">"Excelente complejo, volveremos!"</p>
+                    <div class="review-author"><i class="fab fa-google"></i> Reseña de Google</div>
+                </div>
+            </div>
+            <a href="https://www.google.com/travel/search?q=complejo%20lomas%20del%20sol%20san%20rafael" target="_blank" class="btn-reviews">Leer todas las reseñas</a>
+        </section>
+
+        <section id="ubicacion" class="reveal">
+            <h2 style="text-align:center; margin-top: 80px;">Ubicación</h2>
+            <div class="map-container">
+                <iframe src="https://maps.google.com/?cid=8743119739230934706&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ0" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <section id="reservas" class="booking-section reveal">
+            <h2 style="font-size: 3rem;">Calculá tu Estadía</h2>
+            <p style="opacity: 0.8; margin-bottom: 40px;">Seleccioná tus fechas y nosotros calculamos el resto.</p>
+            
+            <div class="booking-card">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label><i class="fas fa-calendar-check"></i> Fecha de Ingreso</label>
+                        <input type="date" id="fecha-ingreso" onchange="actualizarNoches()">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-calendar-times"></i> Fecha de Egreso</label>
+                        <input type="date" id="fecha-egreso" onchange="actualizarNoches()">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-home"></i> Unidad</label>
+                        <select id="personas">
+                            <option value="60000">Cabaña para 1 y 2 ($60.000 / noche)</option>
+                            <option value="75000">Cabaña para 3 y 4 ($75.000 / noche)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-moon"></i> Noches totales</label>
+                        <input type="number" id="noches" min="1" value="1" readonly style="background: #f9f9f9; color: #888;">
+                    </div>
+                </div>
+                <button class="btn-calc" onclick="calcular()">CALCULAR TOTAL</button>
+                
+                <div id="res-box" style="display:none; margin-top:30px; border-top: 2px dashed #eee; padding-top:25px;">
+                    <h2 id="res-texto" style="color:var(--accent); font-size: 2.2rem; margin-bottom:20px;"></h2>
+                    <a id="wa-link" target="_blank" class="btn-wa">
+                        <i class="fab fa-whatsapp"></i> RESERVAR ESTAS FECHAS
+                    </a>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap;">
+                <div style="font-size: 0.8rem;"><i class="fas fa-check-circle" style="color: var(--whatsapp);"></i> Trato Directo</div>
+                <div style="font-size: 0.8rem;"><i class="fas fa-check-circle" style="color: var(--whatsapp);"></i> Sin Comisiones</div>
+                <div style="font-size: 0.8rem;"><i class="fas fa-check-circle" style="color: var(--whatsapp);"></i> Mejor Precio</div>
+            </div>
+        </section>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrar()">×</span>
+            <div id="m-img" class="modal-img"></div>
+            <div style="padding:30px;">
+                <h2 id="m-titulo"></h2>
+                <p id="m-desc"></p>
+                <p><strong>Servicios:</strong> <span id="m-serv"></span></p>
+                <p><strong>Pax:</strong> <span id="m-pax"></span> personas.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer><p>© 2026 Alquileres San Rafael - Mendoza, Argentina.</p></footer>
+
+    <script>
+        // Lógica para calcular noches automáticamente
+        function actualizarNoches() {
+            const ingreso = document.getElementById('fecha-ingreso').value;
+            const egreso = document.getElementById('fecha-egreso').value;
+            if (ingreso && egreso) {
+                const f1 = new Date(ingreso);
+                const f2 = new Date(egreso);
+                const diferencia = f2 - f1;
+                const dias = diferencia / (1000 * 60 * 60 * 24);
+                document.getElementById('noches').value = dias > 0 ? dias : 1;
+            }
+        }
+
+        // Animaciones Scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        window.onload = reveal;
+
+        // Slider
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        function showSlides() {
+            slides.forEach(s => s.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 5000);
+        }
+        showSlides();
+
+        // Calculadora
+        function calcular() {
+            const precio = parseInt(document.getElementById('personas').value);
+            const noches = parseInt(document.getElementById('noches').value);
+            const ingreso = document.getElementById('fecha-ingreso').value;
+            const egreso = document.getElementById('fecha-egreso').value;
+            if(!ingreso || !egreso) return alert("Por favor selecciona ambas fechas");
+            const total = precio * noches;
+            const formato = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(total);
+            document.getElementById('res-texto').innerText = `Total: ${formato}`;
+            document.getElementById('res-box').style.display = 'block';
+            const fIn = ingreso.split('-').reverse().join('/');
+            const fOut = egreso.split('-').reverse().join('/');
+            const msg = `¡Hola! Consulto por una estadía del ${fIn} al ${fOut} (${noches} noches). El presupuesto es de ${formato}. ¿Tienen lugar?`;
+            document.getElementById('wa-link').href = `https://wa.me/5492604380209?text=${encodeURIComponent(msg)}`;
+        }
+
+        function abrir(t, d, p, s, i) {
+            document.getElementById('m-titulo').innerText = t;
+            document.getElementById('m-desc').innerText = d;
+            document.getElementById('m-pax').innerText = p;
+            document.getElementById('m-serv').innerText = s;
+            document.getElementById('m-img').style.backgroundImage = `url('${i}')`;
+            document.getElementById('modal').style.display = 'block';
+        }
+        function cerrar() { document.getElementById('modal').style.display = 'none'; }
+    </script>
+</body>
+</html>
