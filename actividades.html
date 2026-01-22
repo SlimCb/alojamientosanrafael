@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades en San Rafael | Guía de Experiencias</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #2d6a4f; --dark: #2b2d42; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f4; color: var(--dark); }
+        nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top:0; z-index:100; }
+        .logo { font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.2rem; }
+        .back-link { text-decoration: none; color: var(--accent); font-weight: bold; }
+        .container { max-width: 1100px; margin: auto; padding: 60px 20px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 3rem; text-align: center; }
+        .activities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .activity-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; }
+        .activity-card:hover { transform: translateY(-10px); }
+        .activity-img { height: 250px; background-size: cover; background-position: center; }
+        .activity-body { padding: 25px; }
+        .activity-body h3 { margin: 0 0 10px 0; color: var(--accent); }
+        footer { background: #111; color: white; text-align: center; padding: 40px; margin-top: 100px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">San Rafael Alojamientos</div>
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al Inicio</a>
+    </nav>
+
+    <div class="container">
+        <h1>Experiencias en San Rafael</h1>
+        <p style="text-align: center; color: #666;">Descubrí los paisajes más imponentes de Mendoza a pocos minutos de nuestro complejo.</p>
+
+        <div class="activities-grid">
+            <div class="activity-card">
+                <div class="activity-img" style="background-image: url('https://images.unsplash.com/photo-1533512351221-396f49673854?q=80&w=600');"></div>
+                <div class="activity-body">
+                    <h3>Cañón del Atuel</h3>
+                    <p>Un recorrido serpenteante entre formaciones rocosas milenarias. Ideal para fotografía y asombro.</p>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-img" style="background-image: url('https://images.unsplash.com/photo-1464412356372-11a9f604514a?q=80&w=600');"></div>
+                <div class="activity-body">
+                    <h3>Rafting en Valle Grande</h3>
+                    <p>Adrenalina pura en el río Atuel. Aventura segura para toda la familia con guías expertos.</p>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-img" style="background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=600');"></div>
+                <div class="activity-body">
+                    <h3>Caminos del Vino</h3>
+                    <p>Visita bodegas emblemáticas y disfrutá de degustaciones de los mejores Malbecs de la región.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Alquileres San Rafael - Mendoza, Argentina.</p>
+    </footer>
+</body>
+</html>
